@@ -1,5 +1,5 @@
-#ifndef SEARCHABLE_ARRAY_BAG
-#define SEARCHABLE_ARRAY_BAG
+#ifndef SEARCHABLE_ARRAY_BAG_HPP
+#define SEARCHABLE_ARRAY_BAG_HPP
 
 #include "array_bag.hpp"
 #include "searchable_bag.hpp"
