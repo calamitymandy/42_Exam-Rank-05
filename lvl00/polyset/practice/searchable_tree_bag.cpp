@@ -10,16 +10,16 @@ searchable_tree_bag &searchable_tree_bag::operator=(const searchable_tree_bag &c
 searchable_tree_bag::~searchable_tree_bag() {}
 
 bool searchable_tree_bag::has(int value) const {
-    node *current = this->tree;
+    node *current = tree;
 
     while (current)
     {
         if (current->value == value)
-            return (true);
+            return true;
         else if (current->value > value)
             current = current->l;
-        else
+        else 
             current = current->r;
     }
-    return (false);
+    return false;
 }

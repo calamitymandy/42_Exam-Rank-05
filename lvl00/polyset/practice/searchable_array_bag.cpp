@@ -10,9 +10,9 @@ searchable_array_bag &searchable_array_bag::operator=(const searchable_array_bag
 searchable_array_bag::~searchable_array_bag() {}
 
 bool searchable_array_bag::has(int value) const {
-    for (int i = 0; i < this->size; i++)
+    for (int i = 0; i < size; i++)
     {
-        if (this->data[i] == value)
+        if (data[i] == value)
             return true;
     }
     return false;
