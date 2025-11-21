@@ -11,8 +11,8 @@ void set::insert(int value) {
 }
 void set::insert(int *array, int size) {
     for (int i = 0; i < size; i++) {
-        if (!bag.has(array[i])
-            bag.insert(array[i]));
+        if (!bag.has(array[i]))
+            bag.insert(array[i]);
     }
 }
 void set::print() const {
