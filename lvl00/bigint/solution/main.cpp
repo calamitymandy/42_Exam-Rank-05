@@ -1,11 +1,9 @@
 #include "bigint.hpp"
-#include <iostream>
 
 int main()
 {
     const bigint a(42);
     bigint b(21), c, d(1337), e(d);
-
 
     std::cout << "a = " << a << std::endl;
     std::cout << "b = " << b << std::endl;
@@ -31,3 +29,28 @@ int main()
 
     return (0);
 }
+
+/*
+output should be:
+a = 42
+b = 21
+c = 0
+d = 1337
+e = 1337
+a + b = 63
+(c += a) = 42
+b = 21
+++b = 22
+b++ = 22
+(b << 10) + 42 = 230000000042
+(d <<= 4) = 13370000
+(d >>= 2) = 133700
+a = 42
+d = 133700
+(d < a) = 0
+(d > a) = 1
+(d == a) = 0
+(d != a) = 1
+(d <= a) = 0
+(d >= a) = 1
+*/

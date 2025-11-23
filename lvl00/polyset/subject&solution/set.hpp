@@ -9,7 +9,7 @@ class set {
     public:
         set(searchable_bag &_bag);
         set(const set &copy);
-        set &operator=(const set &copy) = delete;
+        set &operator=(const set &copy);
         ~set();
 
         void insert(int value);

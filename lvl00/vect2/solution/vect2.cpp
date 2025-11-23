@@ -1,128 +1,125 @@
 #include "vect2.hpp"
 
-// Default: initialize to (0, 0)
 vect2::vect2() : x(0), y(0) {}
 
-// Constructor with explicit x, y values
 vect2::vect2(int x, int y) : x(x), y(y) {}
 
-// Copy constructor
 vect2::vect2(const vect2& copy) : x(copy.x), y(copy.y) {}
 
-// Nothing special in destructor
-vect2::~vect2() {}
-
-// Copy assignment operator
-vect2& vect2::operator=(const vect2& copy) {
-    // Avoid self-assignment (v = v)
-    if (this != &copy) {
-        this->x = copy.x;
-        this->y = copy.y;
-    }
-    return *this;
+vect2&	vect2::operator=(const vect2& copy)
+{
+	if (this != &copy)
+	{
+		x = copy.x;
+		y = copy.y;
+	}
+	return (*this);
 }
 
-// v1 + v2
-vect2 vect2::operator+(const vect2& right) const {
-    vect2 result(*this);     // Start with a copy of left operand
-    return result += right;   // Reuse operator+=
+int&	vect2::operator[](int i)
+{
+	if (i == 0)
+		return (x);
+	else
+		return (y);
 }
 
-// v1 += v2
-vect2& vect2::operator+=(const vect2& right) {
-    this->x += right.x;
-    this->y += right.y;
-    return *this;
+int		vect2::operator[](int i) const
+{
+	if (i == 0)
+		return (x);
+	else
+		return (y);
 }
 
-// v1 - v2
-vect2 vect2::operator-(const vect2& right) const {
-    vect2 result(*this);
-    return result -= right;
+vect2&	vect2::operator++()
+{
+	x++;
+	y++;
+	return (*this);
 }
 
-// -v (negates the vector)
-vect2 vect2::operator-() const {
-    return vect2(-(this->x), -(this->y));
+vect2	vect2::operator++(int)
+{
+	vect2	tmp = *this;
+	x++;
+	y++;
+	return (tmp);
 }
 
-// v1 -= v2
-vect2& vect2::operator-=(const vect2& right) {
-    this->x -= right.x;
-    this->y -= right.y;
-    return *this;
+vect2&	vect2::operator--()
+{
+	x--;
+	y--;
+	return (*this);
 }
 
-// v * n
-vect2 vect2::operator*(int num) const {
-    vect2 result(*this);
-    return result *= num;
+vect2	vect2::operator--(int)
+{
+	vect2	tmp = *this;
+	x--;
+	y--;
+	return (tmp);
 }
 
-// v *= n
-vect2& vect2::operator*=(int num) {
-    this->x *= num;
-    this->y *= num;
-    return *this;
+vect2&	vect2::operator+=(const vect2& v)
+{
+	x += v.x;
+	y += v.y;
+	return (*this);
 }
 
-// Prefix ++v
-vect2& vect2::operator++() {
-    this->x++;
-    this->y++;
-    return *this;
+vect2&	vect2::operator-=(const vect2& v)
+{
+	x -= v.x;
+	y -= v.y;
+	return (*this);
 }
 
-// Postfix v++
-vect2 vect2::operator++(int) {
-    vect2 result(*this);   // Save original
-    ++(*this);             // Use prefix to increment
-    return result;         // Return old value
+vect2&	vect2::operator*=(int s)
+{
+	x *= s;
+	y *= s;
+	return (*this);
 }
 
-// Prefix --v
-vect2& vect2::operator--() {
-    this->x--;
-    this->y--;
-    return *this;
+vect2	vect2::operator+(const vect2& v) const
+{
+	return (vect2(x + v.x, y + v.y));
 }
 
-// Postfix v--
-vect2 vect2::operator--(int) {
-    vect2 result(*this);
-    --(*this);
-    return result;
+vect2	vect2::operator-(const vect2& v) const
+{
+	return (vect2(x - v.x, y - v.y));
 }
 
-// Compare equality
-bool vect2::operator==(const vect2& right) const {
-    return this->x == right.x && this->y == right.y;
+vect2	vect2::operator*(int s) const
+{
+	return (vect2(x * s, y * s));
 }
 
-// Compare inequality
-bool vect2::operator!=(const vect2& right) const {
-    return !(*this == right);
+vect2	vect2::operator-() const
+{
+	return (vect2(-x, -y));
 }
 
-// Index operator (read-only)
-int vect2::operator[](int index) const {
-    return index == 0 ? x : y;
+vect2	operator*(int s, const vect2& v)
+{
+	return (vect2(v.x * s, v.y * s));
 }
 
-// Index operator (writeable)
-// index 0 → x, anything else → y
-int& vect2::operator[](int index) {
-    return index == 0 ? x : y;
+bool	vect2::operator==(const vect2& v) const
+{
+	return (x == v.x && y == v.y);
 }
 
-// n * vector (scalar on the left)
-vect2 operator*(int num, const vect2& right) {
-    vect2 result(right);   // Copy vector
-    return result * num;     // Use member operator*
+bool	vect2::operator!=(const vect2& v) const
+{
+	return (!(x == v.x && y == v.y));
 }
 
-// Output format: {x, y}
-std::ostream& operator<<(std::ostream& os, const vect2& v) {
-    os << "{" << v[0] << ", " << v[1] << "}";
-    return os;
+std::ostream& operator<<(std::ostream& os, const vect2& v)
+{
+	os << "{" << v[0] << ", " << v[1] << "}";	
+	return (os);
 }
