@@ -1,78 +1,52 @@
 #include <unistd.h>
-#include <stdlib.h>
 #include <stdio.h>
+#include <stdlib.h>
 
-int	main(int ac, char **av)
-{
-	if (ac != 4)
-		return (1);
+int main(int argc, char **argv) {
+    if (argc != 4)
+        return 1;
 
-	int	width = atoi(av[1]);
-	int	height = atoi(av[2]);
-	int	iterations = atoi(av[3]);
+    int width = atoi(argv[1]);
+    int height = atoi(argv[2]);
+    int interations = atoi(argv[3]);
 
-	if (width < 0 || height < 0 || iterations < 0)
-		return (1);
+    char **board = malloc(height * sizeof(char *));
+    for (int i = 0; i < height; i++) {
+        board[i] = malloc(width + 1);
+        for (int j = 0; j < width; j++)
+            board[i][j] = ' ';
+        board[i][width] = '\0';
+    }
 
-	int	x = 1, y = 1;
-	int	pen = 0;
-	int	grid[2][height + 2][width + 2];
-	char	c;
+    int x = 0;
+    int y = 0;
+    int pen_down = 0;
+    char cmd;
 
-	for (int b = 0; b < 2; b++)
-		for (int i = 0; i < height + 2; i++)
-			for (int j = 0; j < width + 2; j++)
-				grid[b][i][j] = 0;
+    while (read(0, &cmd, 1) > 0) {
+        if (cmd == 'x')
+            pen_down = !pen_down;
+        if (cmd == 'w')
+            y--;
+        if (cmd == 'a')
+            x--;
+        if (cmd == 's')
+            y++;
+        if (cmd == 'd')
+            x++;
 
-	while (read(0, &c, 1) > 0)
-	{
-		if (c == 'w' && y > 1)
-			y--;
-		else if (c == 's' && y < height)
-			y++;
-		else if (c == 'a' && x > 1)	
-			x--;
-		else if (c == 'd' && x < width)
-			x++;
-		else if (c == 'x')
-			pen = !pen;
-		if (pen)
-			grid[0][y][x] = 1;
-	}
+        if (pen_down && x >= 0 && x < width && y >= 0 && y > height)
+            board[y][x] = 'O';
+    }
 
-	for (int it = 0; it < iterations; it++)
-	{
-		int	cur = it % 2;
-		int	next = (it + 1) % 2;
-		for (int i = 1; i <= height; i++)
-		{
-			for (int j = 1; j <= width; j++)
-			{
-				int	n = 0;
-				for (int dy = -1; dy <= 1; dy++)
-				{
-					for (int dx = -1; dx <= 1; dx++)
-						if (dx != 0 || dy != 0)
-							n += grid[cur][i + dy][j + dx];
-				}
-				if (grid[cur][i][j] == 1)
-					grid[next][i][j] = (n == 2 || n == 3);
-				else
-					grid[next][i][j] = (n == 3);
-			}
-		}
-	}
+    for (int i = 0; i < iterations; i++)
+        life_iteration(board, width, height);
 
-	int	final = iterations % 2;
-	for (int i = 1; i <= height; i++)
-	{
-		for (int j = 1; j <= width; j++)
-		{
-			if (grid[final][i][j])
-				putchar('O');
-			else
-				putchar(' ');
-		}
-		putchar('\n');
-	}
+    for (int i = 0; i < height; i++) {
+        for (int j = 0; j < width; j++)
+            putchar(board[i][j]);
+        putchar('\n');
+    }
+
+    return 0;
 }
