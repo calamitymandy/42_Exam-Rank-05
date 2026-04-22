@@ -9,7 +9,7 @@ int count_around(char **board, int width, int height, int x, int y) {
         for (int j = x-1; j <= x +1; j++) {
             if (i == y && j == x)
                 continue;
-            if (board[i][j] == 'O' && i >= 0 && j >= 0 && i < height && j < width)
+            if (i >= 0 && j >= 0 && i < height && j < width && board[i][j] == 'O')
                 count++;
         }
     }
@@ -20,7 +20,7 @@ int count_around(char **board, int width, int height, int x, int y) {
 void life_iteration(char **board, int width, int height) {
     char **newboard = malloc (height * sizeof(char*));
     for (int i = 0; i < height; i++) {
-        newboard[i] == malloc (width +1);
+        newboard[i] = malloc (width +1);
         for (int j = 0; j < width; j++) {
             int around = count_around(board, width, height, j, i);
             if (board[i][j] == 'O')
@@ -30,6 +30,12 @@ void life_iteration(char **board, int width, int height) {
         }
     newboard[i][width] = '\0';
     }
+    for (int i = 0; i < height; i++) {
+        for (int j = 0; j < width; j++)
+            board[i][j] = newboard[i][j];
+        free (newboard[i]);
+    }
+    free (newboard);
 }
 
 int main(int argc, char **argv) {
@@ -56,13 +62,13 @@ int main(int argc, char **argv) {
     while (read(0, &cmd, 1) > 0) {
         if (cmd == 'x')
             pen_down = !pen_down;
-        if (cmd == 'w')
+        if (cmd == 'w' && y > 0)
             y--;
-        if (cmd == 'a')
+        if (cmd == 'a' && x > 0)
             x--;
-        if (cmd == 's')
+        if (cmd == 's' && y < height -1)
             y++;
-        if (cmd == 'd')
+        if (cmd == 'd' && x <width -1)
             x++;
 
         if (pen_down && x >= 0 && y >= 0 && x < width && y < height)
