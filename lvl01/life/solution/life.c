@@ -2,32 +2,33 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+
 int count_around(char **board, int width, int height, int x, int y) {
     int count = 0;
     for (int i = y -1; i <= y +1; i++) {
-        for int j = x -1; j <= x +1; j++ {
+        for (int j = x-1; j <= x +1; j++) {
             if (i == y && j == x)
                 continue;
-            if (board [i][j] == 'O' && i >= 0 && j >= 0 && i < height && j < width)
+            if (board[i][j] == 'O' && i >= 0 && j >= 0 && i < height && j < width)
                 count++;
         }
     }
-    return (count);
+    return count;
 }
 
-void life_iteration(char **board, int width, int height) {
-    char **new_board = malloc(height * sizeof(char *));
 
+void life_iteration(char **board, int width, int height) {
+    char **newboard = malloc (height * sizeof(char*));
     for (int i = 0; i < height; i++) {
-        new_board[i] = malloc(width +1);
+        newboard[i] == malloc (width +1);
         for (int j = 0; j < width; j++) {
             int around = count_around(board, width, height, j, i);
-            if (board[i][j] = 'O')
-                new_board[i][j] = (around == 2 || around == 3) ? 'O';
+            if (board[i][j] == 'O')
+                newboard[i][j] = (around == 2 || around == 3) ? 'O' : ' ';
             else
-                new_board[i][j] = (around == 3) ? 'O' : ' ';
+                newboard[i][j] = (around == 3) ? 'O' : ' ';
         }
-        new_board[i][width] = '\0';
+    newboard[i][width] = '\0';
     }
 }
 
@@ -36,12 +37,12 @@ int main(int argc, char **argv) {
         return 1;
 
     int width = atoi(argv[1]);
-    int height = atoi(argv[2]);
-    int interations = atoi(argv[3]);
+    int height = atoi (argv[2]);
+    int iterations = atoi(argv[3]);
 
     char **board = malloc(height * sizeof(char *));
     for (int i = 0; i < height; i++) {
-        board[i] = malloc(width + 1);
+        board[i] = malloc(width +1);
         for (int j = 0; j < width; j++)
             board[i][j] = ' ';
         board[i][width] = '\0';
@@ -64,7 +65,7 @@ int main(int argc, char **argv) {
         if (cmd == 'd')
             x++;
 
-        if (pen_down && x >= 0 && x < width && y >= 0 && y > height)
+        if (pen_down && x >= 0 && y >= 0 && x < width && y < height)
             board[y][x] = 'O';
     }
 
