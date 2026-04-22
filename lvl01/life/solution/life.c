@@ -1,15 +1,15 @@
 #include <stdio.h>
-#include <unistd.h>
 #include <stdlib.h>
+#include <unistd.h>
 
 int count_around(char **board, int width, int height, int x, int y) {
     int count = 0;
     for (int i = y -1; i <= y +1; i++) {
-        for (int j = x -1; j <= x +1; j++) {
+        for (int j = x-1; j <= x +1; j++) {
             if (i == y && j == x)
                 continue;
             if (i >= 0 && j >= 0 && i < height && j < width && board[i][j] == 'O')
-            count ++;
+                count++;
         }
     }
     return count;
@@ -33,7 +33,7 @@ void life_iteration(char **board, int width, int height) {
             board[i][j] = newboard[i][j];
         free (newboard[i]);
     }
-    free(newboard);
+    free (newboard);
 }
 
 int main(int argc, char **argv) {
@@ -46,7 +46,7 @@ int main(int argc, char **argv) {
 
     char **board = malloc(height * sizeof(char*));
     for (int i = 0; i < height; i++) {
-        board[i] = malloc (width +1);
+        board[i] = malloc(width +1);
         for (int j = 0; j < width; j++)
             board[i][j] = ' ';
         board[i][width] = '\0';
@@ -68,14 +68,14 @@ int main(int argc, char **argv) {
             y++;
         if (cmd == 'd' && x < width -1)
             x++;
-
-        if (pen_down && x >= 0 && y >= 0 && x < width && y < height)
+        
+        if (pen_down)
             board[y][x] = 'O';
     }
 
     for (int i = 0; i < iterations; i++)
         life_iteration(board, width, height);
-
+    
     for (int i = 0; i < height; i++) {
         for (int j = 0; j < width; j++)
             putchar(board[i][j]);
@@ -83,5 +83,6 @@ int main(int argc, char **argv) {
         free (board[i]);
     }
     free (board);
+
     return 0;
 }
