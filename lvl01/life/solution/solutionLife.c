@@ -81,13 +81,13 @@ int main(int argc, char **argv) {
     while (read(0, &cmd, 1) > 0) {
         if (cmd == 'x') 
             pen_down = !pen_down;
-        if (cmd == 'w') 
+        if (cmd == 'w' && y > 0) 
             y--;
-        if (cmd == 's') 
+        if (cmd == 's' && y < height - 1) 
             y++;
-        if (cmd == 'a') 
+        if (cmd == 'a' && x > 0) 
             x--;
-        if (cmd == 'd') 
+        if (cmd == 'd' && x < width - 1) 
             x++;
         
         // Draw if pen is down and in bounds
