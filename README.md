@@ -13,4 +13,4 @@
 1 aleatory exercise between those 2:
 
 - bsq
-- life 
+- life : my code is valid for the exam
